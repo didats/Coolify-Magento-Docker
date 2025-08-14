@@ -7,6 +7,8 @@ set -e
 echo "Starting Magento installation..."
 echo "Starting Magento installation..." | tee -a log.txt
 
+composer config --global http-basic.repo.magento.com $COMPOSER_USER $COMPOSER_PASSWORD 
+
 # Wait for the database and OpenSearch to be ready
 until nc -z $DB_HOST 3306; do
   echo "Waiting for MySQL to be ready..."
@@ -25,7 +27,7 @@ php bin/magento setup:install \
   --base-url="$MAGENTO_BASE_URL" \
   --db-host="$DB_HOST" \
   --db-name="$DB_NAME" \
-  --db-user="$DB_USER" \
+  --db-user="root" \
   --db-password="$DB_PASSWORD" \
   --search-engine=opensearch \
   --opensearch-host="$OPENSEARCH_HOST" \

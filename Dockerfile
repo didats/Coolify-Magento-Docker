@@ -35,7 +35,7 @@ RUN which composer && composer --version
 
 
 # Set recommended PHP configuration for Magento
-RUN echo "memory_limit = 6G" >> /usr/local/etc/php/conf.d/magento.ini \
+RUN echo "memory_limit = 4G" >> /usr/local/etc/php/conf.d/magento.ini \
     && echo "max_execution_time = 4600" >> /usr/local/etc/php/conf.d/magento.ini \
     && echo "zlib.output_compression = On" >> /usr/local/etc/php/conf.d/magento.ini
 
