@@ -18,7 +18,7 @@ services:
 
   # The PHP-FPM service for processing Magento's PHP code
   php:
-    image: php:8.2-fpm-alpine
+    image: php:8.2-fpm
     container_name: magento_php
     build:
       context: .
