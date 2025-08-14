@@ -30,12 +30,17 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Debug: Check if Composer is installed and in PATH
 RUN which composer && composer --version
 
+
 # Set recommended PHP configuration for Magento
 RUN echo "memory_limit = 6G" >> /usr/local/etc/php/conf.d/magento.ini \
     && echo "max_execution_time = 4600" >> /usr/local/etc/php/conf.d/magento.ini \
     && echo "zlib.output_compression = On" >> /usr/local/etc/php/conf.d/magento.ini
 
 WORKDIR /var/www/html
+
+COPY . /var/www/html/
+RUN composer config --global http-basic.repo.magento.com f5b75676ef89ce20351c84fb4e4f56fb b2af391ca0c97ae23c2cea6e7c9ef7af 
+RUN composer install
 
 # Set proper permissions
 RUN chown -R www-data:www-data /var/www/html
