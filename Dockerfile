@@ -38,7 +38,7 @@ RUN echo "memory_limit = 6G" >> /usr/local/etc/php/conf.d/magento.ini \
 
 WORKDIR /var/www/html
 
-COPY . /var/www/html/
+COPY . .
 RUN composer config --global http-basic.repo.magento.com f5b75676ef89ce20351c84fb4e4f56fb b2af391ca0c97ae23c2cea6e7c9ef7af 
 RUN composer install
 

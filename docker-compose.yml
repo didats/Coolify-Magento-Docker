@@ -23,8 +23,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
-      - ./:/var/www/html
+    # volumes:
+    #   - ./:/var/www/html
     environment:
       # Coolify will provide the actual values for these variables at runtime
       - DB_HOST=${DB_HOST}
