@@ -48,6 +48,9 @@ php bin/magento sampledata:deploy
 echo "Magento installation complete."
 echo "Magento installation complete." | tee -a log.txt
 
+php bin/magento module:enable Bede_PaymentGateway
+php bin/magento deploy:mode:set developer
+
 # Deploy static content and compile
 php bin/magento setup:upgrade
 php bin/magento setup:di:compile
