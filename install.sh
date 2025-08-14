@@ -3,7 +3,13 @@
 # Exit immediately if a command exits with a non-zero status
 set -e
 
+if [ -f info.txt ]; then
+  echo "info.txt already exists. Exiting installation." | tee -a log.txt
+  exit 0
+fi
+
 > log.txt
+> info.txt
 echo "Starting Magento installation..."
 echo "Starting Magento installation..." | tee -a log.txt
 
@@ -38,10 +44,9 @@ php bin/magento setup:install \
   --admin-user="$MAGENTO_ADMIN_USER" \
   --admin-password="$MAGENTO_ADMIN_PASSWORD" \
   --language=en_US \
-  --currency=USD \
+  --currency=KWD \
   --timezone=UTC \
-  --use-rewrites=1 \
-  --cleanup-database
+  --use-rewrites=1
 
 php bin/magento sampledata:deploy
 
