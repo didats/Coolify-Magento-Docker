@@ -18,6 +18,8 @@ RUN apt-get update && \
     libgd-dev \
     zlib1g-dev \
     wget \
+    netcat \
+    netcat-openbsd \
     cron \
     && rm -rf /var/lib/apt/lists/*
 
