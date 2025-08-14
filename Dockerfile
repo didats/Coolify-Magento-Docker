@@ -4,6 +4,8 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     unzip \
     git \
+    unzip \
+    git \
     curl \
     libpng-dev \
     libjpeg-dev \
@@ -18,9 +20,8 @@ RUN apt-get update && \
     libgd-dev \
     zlib1g-dev \
     wget \
-    netcat \
-    netcat-openbsd \
     cron \
+    netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
