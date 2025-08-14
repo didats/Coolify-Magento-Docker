@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Config/etc/config.xsd">
+    <system>
+        <tab id="bede_payment" translate="label" sortOrder="100">
+            <label>Bede Payment</label>
+        </tab>
+        <section id="payment" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="bede_payment" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Bede Payment</label>
+                <field id="active" translate="label comment" sortOrder="10" type="select" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="environment" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Environment</label>
+                    <source_model>Bede\PaymentGateway\Model\Config\Source\Environment</source_model>
+                    <comment>Determines which connection settings to use</comment>
+                </field>
+            </group>
+        </section>
+        <section id="bede_payment_connection" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Connection Settings</label>
+            <tab>bede_payment</tab>
+            <resource>Bede_PaymentGateway::config</resource>
+            
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Settings</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                
+                <field id="environment" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Environment</label>
+                    <source_model>Bede\PaymentGateway\Model\Config\Source\Environment</source_model>
+                    <comment>Select the environment for Bede Payment</comment>
+                </field>
+            </group>
+            
+            <group id="live_settings" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Live Environment Settings</label>
+                <depends>
+                    <field id="bede_payment_connection/general/environment">live</field>
+                </depends>
+                
+                <field id="base_url" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Base URL</label>
+                    <validate>required-entry validate-url</validate>
+                </field>
+                
+                <field id="merchant_id" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Merchant ID</label>
+                    <validate>required-entry</validate>
+                </field>
+                
+                <field id="secret_key" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Secret Key</label>
+                    <validate>required-entry</validate>
+                </field>
+                
+                <field id="success_url" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Success URL</label>
+                    <validate>required-entry validate-url</validate>
+                </field>
+                
+                <field id="failure_url" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Failure URL</label>
+                    <validate>required-entry validate-url</validate>
+                </field>
+                
+                <field id="submerchant_uid" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Submerchant UID</label>
+                </field>
+            </group>
+            
+            <group id="test_settings" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Test Environment Settings</label>
+                <depends>
+                    <field id="bede_payment_connection/general/environment">test</field>
+                </depends>
+                
+                <field id="base_url" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Base URL</label>
+                    <validate>required-entry validate-url</validate>
+                </field>
+                
+                <field id="merchant_id" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Merchant ID</label>
+                    <validate>required-entry</validate>
+                </field>
+                
+                <field id="secret_key" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Secret Key</label>
+                    <validate>required-entry</validate>
+                </field>
+                
+                <field id="success_url" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Success URL</label>
+                    <validate>required-entry validate-url</validate>
+                </field>
+                
+                <field id="failure_url" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Failure URL</label>
+                    <validate>required-entry validate-url</validate>
+                </field>
+                
+                <field id="submerchant_uid" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Submerchant UID</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

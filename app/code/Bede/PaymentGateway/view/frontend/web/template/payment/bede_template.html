@@ -1,0 +1,53 @@
+<div class="payment-method _active">
+    <div class="payment-method-title">
+        <input type="radio" name="payment[method]" class="radio" data-bind="
+                  attr: {'id': getCode()},
+                  value: getCode(),
+                  checked: isChecked,
+                  click: selectPaymentMethod" />
+        <label data-bind="attr: {'for': getCode()}">
+            <span data-bind="text: getTitle()"></span>
+        </label>
+    </div>
+
+    <div class="payment-method-content">
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="payment-method-billing-address">
+        </div>
+
+        <!-- ko if: availableMethods().length === 0 -->
+        <div class="message notice">
+            <span data-bind="i18n: 'No payment options available'"></span>
+        </div>
+        <!-- /ko -->
+        <div class="available-methods" data-bind="visible: availableMethods().length > 0">
+            <h3>Available Payment Options</h3>
+            <ul class="bede-payment-method" data-bind="foreach: availableMethods()">
+                <li class="bede-payment-method-item" data-bind="css: {selected: $parent.selectedMethod() == code}">
+                    <label data-bind="attr: {for: 'method_' + $index()}">
+                        <input type="radio" name="payment[bede_method]" data-bind="attr: {id: 'method_' + $index(), value: code}, checked: $parent.selectedMethod" />
+                        <span data-bind="text: title"></span>
+                        <!-- ko if: logo -->
+                        <img data-bind="attr: {src: logo}" width="50" />
+                        <!-- /ko -->
+                    </label>
+                </li>
+            </ul>
+        </div>
+
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action primary checkout" type="submit" data-bind="
+                        click: placeOrder,
+                        attr: {title: $t('Place Order')},
+                        css: {disabled: !isPlaceOrderActionAllowed()},
+                        enable: (getCode() == isChecked())
+                        " disabled>
+                    <span data-bind="i18n: 'Place Order'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

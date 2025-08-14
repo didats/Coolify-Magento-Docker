@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Store/etc/config.xsd">
+    <default>
+        <payment>
+            <bede_payment>
+                <active>1</active>
+                <title>Bede Payment</title>
+                <model>Bede\PaymentGateway\Model\PaymentMethod</model>
+                <order_status>pending</order_status>
+                <group>offline</group>
+                <sort_order>100</sort_order>
+            </bede_payment>
+        </payment>
+        <bede_payment_connection>
+            <general>
+                <environment>test</environment>
+            </general>
+        </bede_payment_connection>
+    </default>
+</config>
