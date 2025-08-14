@@ -16,30 +16,6 @@ services:
     networks:
       - magento_network
 
-  # The PHP-FPM service for processing Magento's PHP code
-  php:
-    image: php:8.2-fpm
-    container_name: magento_php
-    build:
-      context: .
-      dockerfile: Dockerfile
-    # volumes:
-    #   - ./:/var/www/html
-    environment:
-      # Coolify will provide the actual values for these variables at runtime
-      - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - OPENSEARCH_HOST=${OPENSEARCH_HOST}
-      - OPENSEARCH_PORT=${OPENSEARCH_PORT}
-      - MAGENTO_BASE_URL=${MAGENTO_BASE_URL}
-      - MAGENTO_ADMIN_USER=${MAGENTO_ADMIN_USER}
-      - MAGENTO_ADMIN_PASSWORD=${MAGENTO_ADMIN_PASSWORD}
-      # Add other Magento-specific variables here
-    networks:
-      - magento_network
-
   # The MySQL database
   mysql:
     image: mysql:8.0
@@ -67,7 +43,29 @@ services:
       - opensearch_data:/usr/share/opensearch/data
     networks:
       - magento_network
-
+  php:
+    image: php:8.2-fpm
+    container_name: magento_php
+    command: sh ./install.sh
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # volumes:
+    #   - ./:/var/www/html
+    environment:
+      # Coolify will provide the actual values for these variables at runtime
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - OPENSEARCH_HOST=${OPENSEARCH_HOST}
+      - OPENSEARCH_PORT=${OPENSEARCH_PORT}
+      - MAGENTO_BASE_URL=${MAGENTO_BASE_URL}
+      - MAGENTO_ADMIN_USER=${MAGENTO_ADMIN_USER}
+      - MAGENTO_ADMIN_PASSWORD=${MAGENTO_ADMIN_PASSWORD}
+      # Add other Magento-specific variables here
+    networks:
+      - magento_network
 volumes:
   mysql_data:
   opensearch_data:
