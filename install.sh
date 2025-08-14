@@ -3,16 +3,17 @@
 # Exit immediately if a command exits with a non-zero status
 set -e
 
-echo "Starting Magento installation..."
+> log.txt
+echo "Starting Magento installation..." | tee -a log.txt
 
 # Wait for the database and OpenSearch to be ready
 until nc -z $DB_HOST 3306; do
-  echo "Waiting for MySQL to be ready..."
+  echo "Waiting for MySQL to be ready..." | tee -a log.txt
   sleep 5
 done
 
 until nc -z $OPENSEARCH_HOST 9200; do
-  echo "Waiting for OpenSearch to be ready..."
+  echo "Waiting for OpenSearch to be ready..." | tee -a log.txt
   sleep 5
 done
 
@@ -39,7 +40,7 @@ php bin/magento setup:install \
 
 php bin/magento sampledata:deploy
 
-echo "Magento installation complete."
+echo "Magento installation complete." | tee -a log.txt
 
 # Deploy static content and compile
 php bin/magento setup:upgrade
@@ -48,4 +49,4 @@ php bin/magento setup:static-content:deploy -f
 php bin/magento cache:clean
 php bin/magento cache:flush
 
-echo "Deployment finished."
+echo "Deployment finished." | tee -a log.txt
