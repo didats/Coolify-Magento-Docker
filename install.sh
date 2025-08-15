@@ -3,17 +3,31 @@
 # Exit immediately if a command exits with a non-zero status
 set -e
 
+# Read current index or initialize to 1
 if [ -f info.txt ]; then
-  echo "info.txt already exists. Exiting installation." | tee -a log.txt
-  exit 0
+  index=$(cat info.txt)
+  index=$((index + 1))
+  
+  # Reset if index reaches 5
+  if [ "$index" -eq 5 ]; then
+    rm -f info.txt
+    echo "Reset: Deleted info.txt (index reached 5)" | tee -a log.txt
+    exit 0
+  fi
+else
+  index=1
 fi
+
+# Update or create info.txt
+echo "$index" > info.txt
+echo "Updated info.txt with index $index" | tee -a log.txt
 
 > log.txt
 > info.txt
 echo "Starting Magento installation..."
 echo "Starting Magento installation..." | tee -a log.txt
 
-composer config --global http-basic.repo.magento.com $COMPOSER_USER $COMPOSER_PASSWORD 
+composer config -g --auth http-basic.repo.magento.com $COMPOSER_USER $COMPOSER_PASSWORD
 
 # Wait for the database and OpenSearch to be ready
 until nc -z $DB_HOST 3306; do
