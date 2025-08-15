@@ -74,10 +74,26 @@ echo "Magento installation complete." | tee -a log.txt
 php bin/magento module:enable Bede_PaymentGateway
 php bin/magento deploy:mode:set developer
 
+# Clear generated files and cache first
+rm -rf generated/code/* generated/metadata/* var/cache/* var/page_cache/* var/session/* var/view_preprocessed/* pub/static/*
+
 # Deploy static content and compile
 php bin/magento setup:upgrade
+
+# Regenerate composer autoloader
+composer dump-autoload
+
+# Clear cache before compilation
+php bin/magento cache:clean
+php bin/magento cache:flush
+
+# Compile DI
 php bin/magento setup:di:compile
+
+# Deploy static content
 php bin/magento setup:static-content:deploy -f
+
+# Final cache clear
 php bin/magento cache:clean
 php bin/magento cache:flush
 

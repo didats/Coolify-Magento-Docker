@@ -43,6 +43,8 @@ WORKDIR /var/www/html
 
 COPY . .
 
+RUN mv /var/www/html/app/code/Bede/PaymentGateway/Controller/payment /var/www/html/app/code/Bede/PaymentGateway/Controller/Payment
+
 # Make install script executable
 RUN chmod +x install.sh
 
