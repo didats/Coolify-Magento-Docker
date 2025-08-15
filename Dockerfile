@@ -43,41 +43,41 @@ WORKDIR /var/www/html
 
 COPY . .
 
-RUN composer config --global http-basic.repo.magento.com f5b75676ef89ce20351c84fb4e4f56fb b2af391ca0c97ae23c2cea6e7c9ef7af 
+RUN composer config --global http-basic.repo.magento.com ${COMPOSER_USER} ${COMPOSER_PASSWORD} 
 RUN composer install
 
 # Set proper permissions
 RUN chown -R www-data:www-data /var/www/html
 
-RUN ["php", "bin/magento", "setup:install", \
-    "--base-url=${MAGENTO_BASE_URL}", \
-    "--db-host=${DB_HOST}", \
-    "--db-name=${DB_NAME}", \
-    "--db-user=root", \
-    "--db-password=${DB_PASSWORD}", \
-    "--search-engine=opensearch", \
-    "--opensearch-host=${OPENSEARCH_HOST}", \
-    "--opensearch-port=9200", \
-    "--admin-firstname=Admin", \
-    "--admin-lastname=User", \
-    "--admin-email=admin@yourdomain.com", \
-    "--admin-user=${MAGENTO_ADMIN_USER}", \
-    "--admin-password=${MAGENTO_ADMIN_PASSWORD}", \
-    "--language=en_US", \
-    "--currency=KWD", \
-    "--timezone=UTC", \
-    "--use-rewrites=1"]
+# RUN ["php", "bin/magento", "setup:install", \
+#     "--base-url=${MAGENTO_BASE_URL}", \
+#     "--db-host=${DB_HOST}", \
+#     "--db-name=${DB_NAME}", \
+#     "--db-user=root", \
+#     "--db-password=${DB_PASSWORD}", \
+#     "--search-engine=opensearch", \
+#     "--opensearch-host=${OPENSEARCH_HOST}", \
+#     "--opensearch-port=9200", \
+#     "--admin-firstname=Admin", \
+#     "--admin-lastname=User", \
+#     "--admin-email=admin@yourdomain.com", \
+#     "--admin-user=${MAGENTO_ADMIN_USER}", \
+#     "--admin-password=${MAGENTO_ADMIN_PASSWORD}", \
+#     "--language=en_US", \
+#     "--currency=KWD", \
+#     "--timezone=UTC", \
+#     "--use-rewrites=1"]
 
-# Enable custom module and set developer mode
-RUN ["php", "bin/magento", "module:enable", "Bede_PaymentGateway"]
-RUN ["php", "bin/magento", "deploy:mode:set", "developer"]
+# # Enable custom module and set developer mode
+# RUN ["php", "bin/magento", "module:enable", "Bede_PaymentGateway"]
+# RUN ["php", "bin/magento", "deploy:mode:set", "developer"]
 
-# Upgrade, compile and deploy static content
-RUN ["php", "bin/magento", "setup:upgrade"]
-RUN ["php", "bin/magento", "setup:di:compile"]
-RUN ["php", "bin/magento", "setup:static-content:deploy", "-f"]
+# # Upgrade, compile and deploy static content
+# RUN ["php", "bin/magento", "setup:upgrade"]
+# RUN ["php", "bin/magento", "setup:di:compile"]
+# RUN ["php", "bin/magento", "setup:static-content:deploy", "-f"]
 
-# Clear cache
-RUN ["php", "bin/magento", "cache:clean"]
-RUN ["php", "bin/magento", "cache:flush"]
+# # Clear cache
+# RUN ["php", "bin/magento", "cache:clean"]
+# RUN ["php", "bin/magento", "cache:flush"]
 

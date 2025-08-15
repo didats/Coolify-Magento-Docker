@@ -1,22 +1,4 @@
 services:
-  # The web server (Nginx) to serve the Magento application
-  nginx:
-    image: nginx:latest
-    build:
-      context: .
-      dockerfile: Dockerfile.nginx
-    container_name: magento_nginx
-    ports:
-      - "8081:80"
-    volumes:
-      - ./:/var/www/html
-      #- ./nginx.conf:/etc/nginx/nginx.conf
-    depends_on:
-      - php
-    networks:
-      - magento_network
-
-  # The MySQL database
   mysql:
     image: mysql:8.0
     container_name: magento_mysql
@@ -46,10 +28,7 @@ services:
   php:
     image: php:8.2-fpm
     container_name: magento_php
-    #command: sh ./install.sh
-    build:
-      context: .
-      dockerfile: Dockerfile
+    command: sh ./install.sh
     volumes:
       - ./:/var/www/html
     environment:
@@ -63,7 +42,24 @@ services:
       - MAGENTO_BASE_URL=${MAGENTO_BASE_URL}
       - MAGENTO_ADMIN_USER=${MAGENTO_ADMIN_USER}
       - MAGENTO_ADMIN_PASSWORD=${MAGENTO_ADMIN_PASSWORD}
+      - COMPOSER_USER=${COMPOSER_USER}
+      - COMPOSER_PASSWORD=${COMPOSER_PASSWORD}
       # Add other Magento-specific variables here
+    networks:
+      - magento_network
+  nginx:
+    image: nginx:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    container_name: magento_nginx
+    ports:
+      - "8081:80"
+    volumes:
+      - ./:/var/www/html
+      #- ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - php
     networks:
       - magento_network
 volumes:
