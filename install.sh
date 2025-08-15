@@ -62,7 +62,7 @@ php bin/magento setup:install \
   --timezone=UTC \
   --use-rewrites=1
 
-php bin/magento sampledata:deploy
+# php bin/magento sampledata:deploy
 
 echo "Magento installation complete."
 echo "Magento installation complete." | tee -a log.txt
