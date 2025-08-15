@@ -46,12 +46,12 @@ services:
   php:
     image: php:8.2-fpm
     container_name: magento_php
-    command: sh ./install.sh
+    #command: sh ./install.sh
     build:
       context: .
       dockerfile: Dockerfile
-    # volumes:
-    #   - ./:/var/www/html
+    volumes:
+      - ./:/var/www/html
     environment:
       # Coolify will provide the actual values for these variables at runtime
       - DB_HOST=${DB_HOST}
