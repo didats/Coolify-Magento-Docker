@@ -43,8 +43,11 @@ WORKDIR /var/www/html
 
 COPY . .
 
-RUN composer config --global http-basic.repo.magento.com ${COMPOSER_USER} ${COMPOSER_PASSWORD} 
-RUN composer install
+# Make install script executable
+RUN chmod +x install.sh
+
+# Note: Composer auth will be set at runtime via install.sh
+# RUN composer install will be done at runtime to avoid build-time env var issues
 
 # Set proper permissions
 RUN chown -R www-data:www-data /var/www/html

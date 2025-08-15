@@ -27,7 +27,11 @@ echo "Updated info.txt with index $index" | tee -a log.txt
 echo "Starting Magento installation..."
 echo "Starting Magento installation..." | tee -a log.txt
 
+# Set composer authentication first
 composer config -g --auth http-basic.repo.magento.com $COMPOSER_USER $COMPOSER_PASSWORD
+
+# Install composer dependencies
+composer install --no-dev --optimize-autoloader
 
 # Wait for the database and OpenSearch to be ready
 until nc -z $DB_HOST 3306; do
